@@ -39,11 +39,71 @@ public class Recursion_02 {
         }
         return ans;
     }
+
+    public static ArrayList<String> decodeTheGivenNumber(String str){
+        if(str.length() == 0){
+            ArrayList<String> base = new ArrayList<String>();
+            base.add("");
+            return base;
+        }
+
+        char ch1 = str.charAt(0);
+        ArrayList<String> recAns1 = decodeTheGivenNumber(str.substring(1));
+        ArrayList<String> ans = new ArrayList<String>();
+        for(String s:recAns1){
+            ans.add((char)('a'+ ch1 - '1') + s);
+        }
+
+        if(str.length() > 1){
+            int num2 = (ch1 - '0') * 10 + (str.charAt(1) - '0');
+            if(num2 <= 26){
+                ArrayList<String> recAns2 = decodeTheGivenNumber(str.substring(2));
+                for(String s : recAns2){
+                    ans.add((char)('a'+ num2 - 1)+s);
+                }
+            } 
+        }
+        return ans;
+    }
+
+    public static ArrayList<String> decodeTheGivenNokiaKeyNumber(String str){
+        if(str.length() == 0){
+            ArrayList<String> base = new ArrayList<String>();
+            base.add("");
+            return base;
+        }
+
+        char ch1 = str.charAt(0);
+        String code = nokiaKeys[ch1 - '0'];
+        ArrayList<String> recAns1 = decodeTheGivenNokiaKeyNumber(str.substring(1));
+        ArrayList<String> ans = new ArrayList<String>();
+        for(int i = 0; i < code.length(); i++){
+            for(String s:recAns1){
+                ans.add((char)code.charAt(i) + s);
+            }
+        }   
+
+        if(str.length() > 1){
+            int num = (ch1 - '0') * 10 + (str.charAt(1) - '0');
+            if(num == 10 || num == 11){
+                ArrayList<String> recAns2 = decodeTheGivenNokiaKeyNumber(str.substring(2));
+                for(int i = 0; i < code.length(); i++){
+                    for(String s:recAns2){
+                        ans.add((char)code.charAt(i) + s);
+                    }
+                }   
+            } 
+        }
+        return ans;
+    }
     
     public static void main(String[] args) {
-        String str = "abckl";
+        // String str = "abckl";
 
         // System.out.println(getAllSubstrings(str));
-        System.out.println(getAllNokiaKeysCombinations("456"));
+        // System.out.println(getAllNokiaKeysCombinations("456"));
+        // System.out.println(decodeTheGivenNumber("11284"));
+        System.out.println(decodeTheGivenNokiaKeyNumber("110"));
+
     }
 }
