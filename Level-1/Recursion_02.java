@@ -147,6 +147,92 @@ public class Recursion_02 {
         }
         return ans;
     }
+
+    public static ArrayList<String> mazePathHV(int sr, int sc, int er, int ec){
+        if(sr == er && sc == ec){
+            ArrayList<String> base = new ArrayList<String>();
+            base.add("");
+            return base;
+        }
+
+        ArrayList<String> ans = new ArrayList<>();
+        if(sr <= er){
+            ArrayList<String> recAnsH = mazePathHV(sr, sc + 1, er, ec);
+            for(String i : recAnsH){
+                ans.add(i + "H");
+            }
+        }
+
+        if(sc <= ec){
+            ArrayList<String> recAnsV = mazePathHV(sr + 1, sc, er, ec);
+            for(String i : recAnsV){
+                ans.add(i + "V");
+            }
+        }
+        return ans;
+    }
+
+    public static ArrayList<String> mazePathHDV(int sr, int sc, int er, int ec){
+        if(sr == er && sc == ec){
+            ArrayList<String> base = new ArrayList<String>();
+            base.add("");
+            return base;
+        }
+
+        ArrayList<String> ans = new ArrayList<>();
+        if(sr <= er){
+            ArrayList<String> recAnsH = mazePathHDV(sr, sc + 1, er, ec);
+            for(String i : recAnsH){
+                ans.add(i + "H");
+            }
+        }
+
+        if(sr <= er && sc <= ec){
+            ArrayList<String> recAnsD = mazePathHDV(sr + 1, sc + 1, er, ec);
+            for(String i : recAnsD){
+                ans.add(i + "D");    
+            }
+        }
+
+        if(sc <= ec){
+            ArrayList<String> recAnsV = mazePathHDV(sr + 1, sc, er, ec);
+            for(String i : recAnsV){
+                ans.add(i + "V");
+            }
+        }
+        return ans;
+    }
+    
+    public static ArrayList<String> mazePathInfiniteCalls(int sr, int sc, int er, int ec){
+        if(sr == er && sc == ec){
+            ArrayList<String> base = new ArrayList<String>();
+            base.add("");
+            return base;
+        }
+
+        ArrayList<String> ans = new ArrayList<>();
+        for(int jump = 1; sc + jump <= ec; jump++){
+            ArrayList<String> recAnsH = mazePathInfiniteCalls(sr, sc + jump, er, ec);
+            for(String i : recAnsH){
+                ans.add(i + "H" + jump);
+            }
+        }
+
+        for(int jump = 1; sr + jump <= er && sc + jump <= ec; jump++){
+            ArrayList<String> recAnsD = mazePathInfiniteCalls(sr + jump, sc + jump, er, ec);
+            for(String i : recAnsD){
+                ans.add(i + "D" + jump);    
+            }
+        }
+
+        for(int jump = 1; sr + jump <= er; jump++){
+            ArrayList<String> recAnsV = mazePathInfiniteCalls(sr + jump, sc, er, ec);
+            for(String i : recAnsV){
+                ans.add(i + "V" + jump);
+            }
+        }
+        return ans;
+    }
     
     public static void main(String[] args) {
         // String str = "abckl";
@@ -158,7 +244,11 @@ public class Recursion_02 {
         // System.out.println(countAllStairsPath(3));
         // System.out.println(countAllBoardPath(6));
 
-        int[] arrBoardPath = {2,4,5};
-        System.out.println(countAllBoardPathOnArray(10,arrBoardPath));
+        // int[] arrBoardPath = {2,4,5};
+        // System.out.println(countAllBoardPathOnArray(10,arrBoardPath));
+
+        // System.out.println(mazePathHV(0,0,2,2));
+        // System.out.println(mazePathHDV(0,0,2,2));
+        System.out.println(mazePathInfiniteCalls(0,0,2,2));
     }
 }
