@@ -96,6 +96,57 @@ public class Recursion_02 {
         }
         return ans;
     }
+
+    public static ArrayList<String> countAllStairsPath(int n){
+        if(n == 0){
+            ArrayList<String> base = new ArrayList<String>();
+            base.add("");
+            return base;
+        }
+
+        ArrayList<String> ans = new ArrayList<>();
+        for(int jump = 1; jump <= 3 && n - jump >= 0; jump++){
+            ArrayList<String> recAns = countAllStairsPath(n - jump);
+            for(String e : recAns){
+                ans.add(e + jump);
+            }
+        }
+        return ans;
+    }
+
+    public static ArrayList<String> countAllBoardPath(int n){
+        if(n == 0){
+            ArrayList<String> base = new ArrayList<String>();
+            base.add("");
+            return base;
+        }
+
+        ArrayList<String> ans = new ArrayList<>();
+        for(int jump = 1; jump <= 6 && n - jump >= 0; jump++){
+            ArrayList<String> recAns = countAllBoardPath(n - jump);
+            for(String e : recAns){
+                ans.add(e + jump);
+            }
+        }
+        return ans;
+    }
+
+    public static ArrayList<String> countAllBoardPathOnArray(int n, int[] arrBoardPath){
+        if(n == 0){
+            ArrayList<String> base = new ArrayList<String>();
+            base.add("");
+            return base;
+        }
+
+        ArrayList<String> ans = new ArrayList<>();
+        for(int i = 0; i < arrBoardPath.length && n - arrBoardPath[i] >= 0; i++){
+            ArrayList<String> recAns = countAllBoardPathOnArray(n - arrBoardPath[i], arrBoardPath);
+            for(String e : recAns){
+                ans.add(e + arrBoardPath[i]);
+            }
+        }
+        return ans;
+    }
     
     public static void main(String[] args) {
         // String str = "abckl";
@@ -103,7 +154,11 @@ public class Recursion_02 {
         // System.out.println(getAllSubstrings(str));
         // System.out.println(getAllNokiaKeysCombinations("456"));
         // System.out.println(decodeTheGivenNumber("11284"));
-        System.out.println(decodeTheGivenNokiaKeyNumber("110"));
+        // System.out.println(decodeTheGivenNokiaKeyNumber("110"));
+        // System.out.println(countAllStairsPath(3));
+        // System.out.println(countAllBoardPath(6));
 
+        int[] arrBoardPath = {2,4,5};
+        System.out.println(countAllBoardPathOnArray(10,arrBoardPath));
     }
 }
