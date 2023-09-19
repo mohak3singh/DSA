@@ -105,6 +105,7 @@ public class Basic_ques {
 //		printDigitsInReverseOrder(123456);
 //		digitOfANumberInOrder(123456);
 //		System.out.println(rotateANumber(1234567, 4));
-		System.out.println(pythagoreanTriplet_01(3,4,5));
+		// System.out.println(pythagoreanTriplet_01(3,4,5));
+        // System.out.println(pythagoreanTriplet_02(3,4,5));
 	}
 }

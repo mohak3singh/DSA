@@ -1,7 +1,7 @@
 package Recursion;
-// import java.util.ArrayList;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Recursion_Wayup {
@@ -178,7 +178,7 @@ public class Recursion_Wayup {
         return count;
     }
 
-    public void permute(int[] nums,int count,List<List<Integer>> res,List<Integer> ans) {
+    public static void permute(int[] nums,int count,List<List<Integer>> res,List<Integer> ans) {
         if(count == nums.length){
             List<Integer> base = new ArrayList<>();
             for(int ele : ans) base.add(ele);
@@ -203,7 +203,7 @@ public class Recursion_Wayup {
         
     }
     
-    public List<List<Integer>> permute(int[] nums) {
+    public static List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> res = new ArrayList<>();
         List<Integer> ans = new ArrayList<>();
         
@@ -212,8 +212,133 @@ public class Recursion_Wayup {
         return res;
     }
 
+    public static void permuteWithoutDuplicateSol(int[] nums,int count,List<List<Integer>> res,List<Integer> ans) {
+        if(count == nums.length){
+            List<Integer> base = new ArrayList<>();
+            for(int ele : ans) base.add(ele);
+            res.add(base);
+            return; 
+        }
+        
+        int prev = -100;
+        for(int i=0;i<nums.length;i++){
+            
+            if(nums[i]>= -10 && nums[i] <= 10 && nums[i] != prev){
+                int val = nums[i];
+                
+                nums[i] = -11;
+                ans.add(val);
+                
+                permuteWithoutDuplicateSol(nums,count + 1,res,ans);
+                
+                ans.remove(ans.size() - 1);
+                nums[i] = val;
+            }
+            prev = nums[i];
+        }
+    }
+    
+    public static List<List<Integer>> permuteWithoutDuplicate(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        List<Integer> ans = new ArrayList<>();
+        
+        permuteWithoutDuplicateSol(nums,0,res,ans);
+        
+        return res;
+    }
+
+    public static int mazePath_HDV_using_Dir(int sr, int sc, int er, int ec, String ans, int[][] dir, String[] dirS){
+        if(sr == er && sc == ec){
+            System.out.println(ans);
+            return 1;
+        }
+
+        int count = 0;
+        for(int d = 0; d < dirS.length; d++){
+            int r = sr + dir[d][0];
+            int c = sc + dir[d][1];
+            
+            if(r >= 0 && c >= 0 && r <= er && c <= ec){
+                count += mazePath_HDV_using_Dir(r, c, er, ec, ans + dirS[d], dir, dirS);
+            }
+        }
+        return count;
+    }
+
+    // 1 -> blocked cell , 0 -> empty cell
+    public static int floodFill(int sr, int sc, int[][] board, String ans, int[][] dir, String[] dirS){
+        if(sr == board.length - 1 && sc == board[0].length - 1){
+            System.out.println(ans);
+            return 1;
+        }
+
+        board[sr][sc] = 1;
+        int count = 0;
+        for(int d = 0; d < dirS.length; d++){
+            int r = sr + dir[d][0];
+            int c = sc + dir[d][1];
+            
+            if(r >= 0 && c >= 0 && r < board.length && c < board[0].length && board[r][c] == 0){
+                count += floodFill(r, c, board, ans + dirS[d], dir, dirS);
+            }
+        }
+        board[sr][sc] = 0;
+        return count;
+    }
+
+    // 1 -> blocked cell , 0 -> empty cell
+    public static int floodFillfor8Dir(int sr, int sc, int[][] board, String ans, int[][] dir, String[] dirS){
+        if(sr == board.length - 1 && sc == board[0].length - 1){
+            System.out.println(ans);
+            return 1;
+        }
+
+        board[sr][sc] = 1;
+        int count = 0;
+        for(int d = 0; d < dirS.length; d++){
+            int r = sr + dir[d][0];
+            int c = sc + dir[d][1];
+            
+            if(r >= 0 && c >= 0 && r < board.length && c < board[0].length && board[r][c] == 0){
+                count += floodFillfor8Dir(r, c, board, ans + dirS[d], dir, dirS);
+            }
+        }
+        board[sr][sc] = 0;
+        return count;
+    }
+
+    // 0 -> empty cell, 1 -> blocked cell
+    public static int floodFill_Jump(int sr, int sc, int[][] board, String ans, int[][] dir, String[] dirS,
+            int Radius) {
+        int n = board.length, m = board[0].length;
+        if (sr == n - 1 && sc == m - 1) {
+            System.out.println(ans);
+            return 1;
+        }
+
+        board[sr][sc] = 1;
+
+        int count = 0;
+
+        for (int d = 0; d < dir.length; d++) {
+            for (int rad = 1; rad <= Radius; rad++) {
+                int r = sr + rad * dir[d][0];
+                int c = sc + rad * dir[d][1];
+
+                if (r >= 0 && c >= 0 && r < board.length && c < board[0].length) {
+                    if (board[r][c] == 0)
+                        count += floodFill_Jump(r, c, board, ans + rad + dirS[d], dir, dirS, Radius);
+                } else
+                    break;
+            }
+        }
+
+        board[sr][sc] = 0;
+        return count;
+    }
+
     public static void main(String[] args) {
-        String ans = "";
+        // String ans = "";
 
         // System.out.println(subSequenceWayUp("abc",ans));
         // System.out.println(nokiaKeysWayUp("245", ans));
@@ -223,10 +348,35 @@ public class Recursion_Wayup {
         // int[] arrJumps = {1,2,3};
         // System.out.println(boardPathInArrayWayUp(10,ans, arrJumps));
 
-        System.out.println(mazePath_HVD(0,0,2,2,ans));
+        // System.out.println(mazePath_HVD(0,0,2,2,ans));
         // System.out.println(mazePath_MultiHVD(0, 0, 2, 2, ""));
         // System.out.println(permutation("aba", ""));
         // permutationWithoutDuplicate("abab");
-        // System.out.println(decodeWays("112403",""));
+        // System.out.println(decodeWays("11243",""));
+
+        // int[] nums = {3,3,0,3};
+        // System.out.println(permute(nums));
+        // Arrays.sort(nums);
+        // System.out.println(permuteWithoutDuplicate(nums));
+        
+        // String[] dirS = {"H","D","V"};
+        // int[][] dir = {{0,1},{1,1},{1,0}};
+        // System.out.println(mazePath_HDV_using_Dir(0,0,2,2,ans, dir, dirS));
+
+        // String[] dirS = {"t","r","d","l"};
+        // int[][] dir = {{-1,0},{0,1},{1,0},{0,-1}};
+        // int[][] board = new int[3][3];
+        // System.out.println(floodFill(0, 0, board, "", dir, dirS));
+
+        //flood fill 8 directions
+        // String[] dirS8 = {"t","r","d","l","n","w","s","e"};
+        // int[][] dir8 = {{-1,0},{0,1},{1,0},{0,-1},{-1,-1},{-1,1},{1,1},{1,-1}};
+        // int[][] board = new int[3][3];
+        // System.out.println(floodFillfor8Dir(0, 0, board, "", dir8, dirS8));
+
+        String[] dirS8 = {"t","r","d","l","n","w","s","e"};
+        int[][] dir8 = {{-1,0},{0,1},{1,0},{0,-1},{-1,-1},{-1,1},{1,1},{1,-1}};
+        int[][] board = new int[3][3];
+        System.out.println(floodFill_Jump(0, 0, board, "", dir8, dirS8, 5));
     }
 }
