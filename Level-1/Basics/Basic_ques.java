@@ -25,6 +25,7 @@ public class Basic_ques {
         return len;
     }
 
+    //R -> L
     public static void printDigitsInReverseOrder(int n) {
         while (n != 0) {
             int rem = n % 10;
@@ -42,7 +43,7 @@ public class Basic_ques {
         }
         return pow;
     }
-
+    // L -> R
     public static void digitOfANumberInOrder(int n) {
         int pow = powerEqualDigit(n);
 
@@ -97,15 +98,30 @@ public class Basic_ques {
             System.out.println(i * i);
         }
     }
+
+    public static void inverOfNumber(int n){
+        int inv = 0;
+        int op = 1;
+        while(n != 0){
+            int od = n % 10;
+            int ip = od;
+            int id = op;
+            inv += id * (int)Math.pow(10, ip -1);
+            n /= 10;
+            op++;
+        }
+        System.out.println(inv);
+    }
 	
 	public static void main(String[] args) {
-//		System.out.println(isNumberPrime(11));
-//		printAllPrimeInRange(5,50);
-//		System.out.println(countDigitsInNumber(34784));
-//		printDigitsInReverseOrder(123456);
-//		digitOfANumberInOrder(123456);
-//		System.out.println(rotateANumber(1234567, 4));
+		// System.out.println(isNumberPrime(11));
+		// printAllPrimeInRange(5,50);
+		// System.out.println(countDigitsInNumber(34784));
+		// printDigitsInReverseOrder(123456);
+		// digitOfANumberInOrder(123456);
+		// System.out.println(rotateANumber(1234567, 4));
 		// System.out.println(pythagoreanTriplet_01(3,4,5));
         // System.out.println(pythagoreanTriplet_02(3,4,5));
+        // inverOfNumber(21453);
 	}
 }
