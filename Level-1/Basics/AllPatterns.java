@@ -1,4 +1,4 @@
-package Patterns;
+package Basics;
 
 public class AllPatterns {
     public static void rightAngleTriangle(int n){
