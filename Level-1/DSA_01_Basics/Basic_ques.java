@@ -1,4 +1,4 @@
-package Basics;
+package DSA_01_Basics;
 
 public class Basic_ques {
     public static boolean isNumberPrime(int n) {

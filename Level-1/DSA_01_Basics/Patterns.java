@@ -1,4 +1,4 @@
-package Basics;
+package DSA_01_Basics;
 
 public class Patterns {
     public static void rightAngleTriangle(int n){
