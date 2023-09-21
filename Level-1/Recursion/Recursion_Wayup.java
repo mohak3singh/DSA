@@ -1,7 +1,7 @@
 package Recursion;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+// import java.util.Arrays;
 import java.util.List;
 
 public class Recursion_Wayup {
@@ -337,6 +337,192 @@ public class Recursion_Wayup {
         return count;
     }
 
+    // https://practice.geeksforgeeks.org/problems/rat-in-a-maze-problem/1#
+    public static int ratInAMaze(int sr, int sc, int[][] arr, String ans, int[][] dir, String[] dirS, ArrayList<String> res) {
+
+        int n = arr.length, m = arr[0].length;
+        if (sr == n - 1 && sc == m - 1) {
+            res.add(ans);
+            return 1;
+        }
+
+        arr[sr][sc] = 0; // block
+        int count = 0;
+        for (int d = 0; d < dir.length; d++) {
+            int r = sr + dir[d][0];
+            int c = sc + dir[d][1];
+
+            if (r >= 0 && c >= 0 && r < n && c < m && arr[r][c] == 1) {
+                count += ratInAMaze(r, c, arr, ans + dirS[d], dir, dirS, res);
+            }
+        }
+
+        arr[sr][sc] = 1; // free
+        return count;
+    }
+
+    // To get only one path
+    public static boolean floodFill_2(int sr, int sc, int[][] board, String ans, int[][] dir, String[] dirS) {
+        int n = board.length, m = board[0].length;
+        if (sr == n - 1 && sc == m - 1) {
+            System.out.println(ans);
+            return true;
+        }
+
+        board[sr][sc] = 1;
+
+        boolean res = false;
+        for (int d = 0; d < dir.length; d++) {
+            int r = sr + dir[d][0];
+            int c = sc + dir[d][1];
+
+            if (r >= 0 && c >= 0 && r < board.length && c < board[0].length) {
+                if (board[r][c] == 0)
+                    res = res || floodFill_2(r, c, board, ans + dirS[d], dir, dirS);
+            }
+        }
+
+        board[sr][sc] = 0;
+        return res;
+    }
+
+     // https://www.geeksforgeeks.org/count-number-ways-reach-destination-maze/
+     double mod = 1e9 + 7;
+     public double floodFill(int sr, int sc, int[][] arr, int[][] dir) {
+ 
+         int n = arr.length, m = arr[0].length;
+         if (sr == n - 1 && sc == m - 1) {
+             return 1;
+         }
+ 
+         arr[sr][sc] = 1; // block
+         double count = 0;
+         for (int d = 0; d < dir.length; d++) {
+             int r = sr + dir[d][0];
+             int c = sc + dir[d][1];
+ 
+             if (r >= 0 && c >= 0 && r < n && c < m && arr[r][c] == 0) {
+                 count = (count % mod + floodFill(r, c, arr, dir) % mod) % mod;
+             }
+         }
+ 
+         arr[sr][sc] = 0; // free
+         return count;
+     }
+ 
+     public double FindWays(int n, int m, int[][] blocked_cells) {
+         int[][] arr = new int[n][m];
+         for (int[] cell : blocked_cells) {
+             int i = cell[0] - 1;
+             int j = cell[1] - 1;
+ 
+             arr[i][j] = 1;
+         }
+ 
+         if (arr[n - 1][m - 1] == 1 || arr[0][0] == 1)
+             return 0;
+ 
+         int[][] dir = { { 0, 1 }, { 1, 0 } };
+         double count = floodFill(0, 0, arr, dir);
+         return count;
+     }
+
+    public static int floodFill_longestLen(int sr, int sc, int[][] board, int[][] dir) {
+        int n = board.length, m = board[0].length;
+        if (sr == n - 1 && sc == m - 1) {
+            return 0;
+        }
+
+        board[sr][sc] = 1;   
+        int longestLen = -1;
+        for (int d = 0; d < dir.length; d++) {
+            int r = sr + dir[d][0];
+            int c = sc + dir[d][1];
+
+            if (r >= 0 && c >= 0 && r < board.length && c < board[0].length) {
+                if (board[r][c] == 0) {
+                    int recAns = floodFill_longestLen(r, c, board, dir);
+                    if (recAns != -1 && recAns + 1 > longestLen) {
+                        longestLen = recAns + 1;
+                    }
+                }
+            }
+        }
+        board[sr][sc] = 0;
+        return longestLen;
+    }
+
+    public static int floodFill_shortestLen(int sr, int sc, int[][] board, int[][] dir) {
+        int n = board.length, m = board[0].length;
+        if (sr == n - 1 && sc == m - 1) {
+            return 0;
+        }
+
+        board[sr][sc] = 1;
+
+        int shortestLen = (int) 1e9;
+        for (int d = 0; d < dir.length; d++) {
+            int r = sr + dir[d][0];
+            int c = sc + dir[d][1];
+
+            if (r >= 0 && c >= 0 && r < board.length && c < board[0].length) {
+                if (board[r][c] == 0) {
+                    int recAns = floodFill_shortestLen(r, c, board, dir);
+                    if (recAns != (int) 1e9 && recAns + 1 < shortestLen) {
+                        shortestLen = recAns + 1;
+                    }
+                }
+            }
+        }
+
+        board[sr][sc] = 0;
+        return shortestLen;
+    }
+
+    // Knight Tour
+    public static boolean knightTour(int sr, int sc, int[][] board, int move, int[] dirX, int[] dirY) {
+        board[sr][sc] = move; // block
+
+        if (move == 63) {
+            return true;
+        }
+
+        boolean res = false;
+        for (int d = 0; d < 8; d++) {
+            int r = sr + dirX[d];
+            int c = sc + dirY[d];
+
+            if (r >= 0 && c >= 0 && r < board.length && c < board[0].length && board[r][c] == -1) {
+                res = res || knightTour(r, c, board, move + 1, dirX, dirY);
+                if (res)
+                    return res;
+
+            }
+        }
+
+        board[sr][sc] = -1; // free
+        return res;
+    }
+
+    public static void knightTour() {
+        int n = 8;
+        int[][] board = new int[n][n];
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < n; j++)
+                board[i][j] = -1;
+
+        int[] dirX = { 2, 1, -1, -2, -2, -1, 1, 2 };
+        int[] dirY = { 1, 2, 2, 1, -1, -2, -2, -1 };
+        knightTour(0, 0, board, 0, dirX, dirY);
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++)
+                System.out.print(board[i][j] + " ");
+            System.out.println();
+        }
+
+    }
+
     public static void main(String[] args) {
         // String ans = "";
 
@@ -374,9 +560,15 @@ public class Recursion_Wayup {
         // int[][] board = new int[3][3];
         // System.out.println(floodFillfor8Dir(0, 0, board, "", dir8, dirS8));
 
-        String[] dirS8 = {"t","r","d","l","n","w","s","e"};
-        int[][] dir8 = {{-1,0},{0,1},{1,0},{0,-1},{-1,-1},{-1,1},{1,1},{1,-1}};
-        int[][] board = new int[3][3];
-        System.out.println(floodFill_Jump(0, 0, board, "", dir8, dirS8, 5));
+        // String[] dirS8 = {"t","r","d","l","n","w","s","e"};
+        // int[][] dir8 = {{-1,0},{0,1},{1,0},{0,-1},{-1,-1},{-1,1},{1,1},{1,-1}};
+        // int[][] board = new int[3][3];
+        // System.out.println(floodFill_Jump(0, 0, board, "", dir8, dirS8, 5));
+
+        // int[][] board = new int[3][3];
+        // int[][] dir4 = {{-1,0},{0,1},{1,0},{0,-1}};
+        // System.out.println(floodFill_longestLen(0, 0, board, dir4));
+
+        knightTour();
     }
 }
