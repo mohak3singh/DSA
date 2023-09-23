@@ -74,7 +74,6 @@ public class Arrays {
             int idx = (i + r) % n;
             ans[idx] = arr[i];
         }
-
         return ans;
     }
 
@@ -258,9 +257,11 @@ public class Arrays {
         //     System.out.print(e+" ");
         // }
 
-        int[] ans = rotateOfArray2(arr,3);
-         for(int e:ans){
-            System.out.print(e+" ");
-        }
+        // int[] ans = rotateOfArray2(arr,3);
+        //  for(int e:ans){
+        //     System.out.print(e+" ");
+        // }
+
+        printAllSubArrays(arr);
     }
 }

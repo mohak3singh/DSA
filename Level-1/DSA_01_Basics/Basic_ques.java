@@ -99,7 +99,7 @@ public class Basic_ques {
         }
     }
 
-    public static void inverOfNumber(int n){
+    public static void invertOfNumber(int n){
         int inv = 0;
         int op = 1;
         while(n != 0){
@@ -122,6 +122,6 @@ public class Basic_ques {
 		// System.out.println(rotateANumber(1234567, 4));
 		// System.out.println(pythagoreanTriplet_01(3,4,5));
         // System.out.println(pythagoreanTriplet_02(3,4,5));
-        // inverOfNumber(21453);
+        // invertOfNumber(21453);
 	}
 }
