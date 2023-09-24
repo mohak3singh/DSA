@@ -1,5 +1,7 @@
 package DSA_05_Time_and_Space;
 
+import java.util.Random;
+
 public class TimeAndSpace {
 
     public static void swap(int[] arr, int i, int j){
@@ -195,6 +197,42 @@ public class TimeAndSpace {
         swap(arr, ++p, li);
     }
 
+    // Quick sort
+    public static Random rand = new Random();
+
+    public static int partitionOverPivot(int[] arr, int si, int ei, int pIdx) {
+        swap(arr, pIdx, ei);
+
+        int p = si - 1, itr = si;
+        while (itr <= ei) {
+            if (arr[itr] <= arr[ei])
+                swap(arr, itr, ++p);
+            itr++;
+        }
+
+        return p;
+    }
+
+    public static void quickSort(int[] arr, int si, int ei) {
+        if (si >= ei)
+            return;
+
+        int pIdx = ei; // rand.nextInt(ei - si + 1) + si
+        int p = partitionOverPivot(arr, si, ei, pIdx);
+
+        // int prev = si, idx = si;
+        // while (idx <= ei && arr[prev] <= arr[idx]) {
+        // prev = idx;
+        // idx++;
+        // }
+
+        // if (idx == ei + 1)
+        // return;
+
+        quickSort(arr, si, p - 1);
+        quickSort(arr, p + 1, ei);
+    }
+
     public static void main(String[] args) {
         // int[] arr = {1,0,0,0,1,1,0,1,1,0,0};
         // int[] ans = sort_01(arr);
@@ -215,11 +253,17 @@ public class TimeAndSpace {
         //     System.out.print(a + " ");
         // }
 
-        int[] arr = {9,4,10,3,1,6,5};
-        int[] ans = selectionSort(arr);
-        for(int a : ans){
-            System.out.print(a + " ");
-        }
+        // int[] arr = {9,4,10,3,1,6,5};
+        // int[] ans = selectionSort(arr);
+        // for(int a : ans){
+        //     System.out.print(a + " ");
+        // }
         // PartitionAnArray(arr, 4);    
+
+        int[] arr = { -12, 2, 7, 4, 34, 23, 0, 1, -1, -50, 16, 23, 7, 4, 2, 3 };
+        quickSort(arr, 0, arr.length - 1);
+
+        for (int ele : arr)
+            System.out.print(ele + " ");
     }
 }
