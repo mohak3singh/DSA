@@ -233,6 +233,71 @@ public class TimeAndSpace {
         quickSort(arr, p + 1, ei);
     }
 
+    // Find 3rd largest element
+    public static int segregate(int[] arr, int pivot, int si, int ei) {
+        swap(arr, pivot, ei);
+
+        int p = si - 1, itr = si;
+
+        while (itr <= ei) {
+            if (arr[itr] <= arr[ei])
+                swap(arr, ++p, itr);
+            itr++;
+        }
+
+        return p;
+    }
+
+    public static void quickselect(int[] arr, int si, int ei, int idx) {
+        if (si > ei)
+            return;
+
+        int pivot = ei;
+        int pIdx = segregate(arr, pivot, si, ei);
+        if (pIdx == idx)
+            return;
+        else if (idx > pIdx)
+            quickselect(arr, pIdx + 1, ei, idx);
+        else
+            quickselect(arr, si, pIdx - 1, idx);
+    }
+
+    public static int quickselect(int[] arr, int k) {
+        int n = arr.length, idx = n - k;
+        quickselect(arr, 0, n - 1, idx);
+
+        return arr[idx];
+    }
+
+    // Merge sort 
+    public static int[] mergesort(int[] arr, int si, int ei) {
+        if (si == ei) {
+            return new int[] { arr[si] };
+        }
+
+        int mid = (si + ei) / 2;
+        int[] left = mergesort(arr, si, mid);
+        int[] right = mergesort(arr, mid + 1, ei);
+
+        return mergeTwoSortedArrays(left, right);
+    }
+
+    public static void targetSumPair(int[] arr, int target) {
+        int n = arr.length;
+        quickSort(arr, 0, n - 1);  // Arrays.sort(arr);
+
+        int si = 0, ei = n - 1;
+        while (si < ei) {
+            int sum = arr[si] + arr[ei];
+            if (sum == target)
+                System.out.println(arr[si++] + ", " + arr[ei--]);
+            else if (sum < target)
+                si++;
+            else
+                ei--;
+        }
+    }
+
     public static void main(String[] args) {
         // int[] arr = {1,0,0,0,1,1,0,1,1,0,0};
         // int[] ans = sort_01(arr);
@@ -262,8 +327,16 @@ public class TimeAndSpace {
 
         int[] arr = { -12, 2, 7, 4, 34, 23, 0, 1, -1, -50, 16, 23, 7, 4, 2, 3 };
         quickSort(arr, 0, arr.length - 1);
-
         for (int ele : arr)
             System.out.print(ele + " ");
+
+        //  int[] arr = { -12, 2, 7, 4, 34, 23, 0, 1, -1, -50, 16, 23, 7, 4, 2, 3 };
+        // int k = 5;
+        // System.out.println(quickselect(arr, k));
+
+        // int[] arr = { -12, 2, 7, 4, 34, 23, 0, 1, -1, -50, 16, 23, 7, 4, 2, 3 };
+        // arr = mergesort(arr, 0, arr.length - 1);
+        // for (int ele : arr)
+        //     System.out.print(ele + " ");
     }
 }

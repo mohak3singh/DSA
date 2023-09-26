@@ -25,7 +25,7 @@ class Recursion_01{
         printArray(arr,idx + 1);
     }
 
-     public static int maxInArr(int[] arr, int idx){
+    public static int maxInArr(int[] arr, int idx){
         if(idx == arr.length){
             return -(int)1e9;
         }
