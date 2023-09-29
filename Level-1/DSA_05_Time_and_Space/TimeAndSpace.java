@@ -1,5 +1,6 @@
 package DSA_05_Time_and_Space;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class TimeAndSpace {
@@ -282,6 +283,8 @@ public class TimeAndSpace {
         return mergeTwoSortedArrays(left, right);
     }
 
+
+    // two sum or target sum
     public static void targetSumPair(int[] arr, int target) {
         int n = arr.length;
         quickSort(arr, 0, n - 1);  // Arrays.sort(arr);
@@ -295,6 +298,109 @@ public class TimeAndSpace {
                 si++;
             else
                 ei--;
+        }
+    }
+
+
+    //threeSum
+    // public static int segregate(int[] arr, int pivot, int si, int ei) {
+    //     swap(arr, pivot, ei);
+
+    //     int p = si - 1, itr = si;
+    //     while (itr <= ei) {
+    //         if (arr[itr] <= arr[ei])
+    //             swap(arr, ++p, itr);
+    //         itr++;
+    //     }
+    //     return p;
+    // }
+
+    // public static void quickSort(int[] arr, int si, int ei) {
+    //     if (si > ei)
+    //         return;
+
+    //     int pivot = ei;
+    //     int pIdx = segregate(arr, pivot, si, ei);
+    //     quickSort(arr, si, pIdx - 1);
+    //     quickSort(arr, pIdx + 1, ei);
+    // }
+
+    // int[] arr = {2,3,4,5,6};
+    public static ArrayList<int[]> twoSum(int[] arr, int tar, int si, int ei) {
+        ArrayList<int[]> ans = new ArrayList<>();
+        while (si < ei) {
+            int sum = arr[si] + arr[ei];
+            if (sum == tar)
+                ans.add(new int[] { arr[si++], arr[ei--] });
+            else if (sum > tar)
+                ei--;
+            else
+                si++;
+        }
+
+        return ans;
+    }
+
+     public static ArrayList<int[]> threeSum(int[] arr, int tar, int si, int ei) {
+        ArrayList<int[]> ans = new ArrayList<>();
+        for (int i = si; i <= ei; i++) {
+            ArrayList<int[]> smallAns = twoSum(arr, tar - arr[i], i + 1, ei);
+
+            for (int[] a : smallAns) {
+                ans.add(new int[] { arr[i], a[0], a[1] });
+            }
+        }
+
+        return ans;
+    }
+
+    public static void threeSum(int[] arr, int tar) {
+        int n = arr.length;
+        quickSort(arr, 0, n - 1);
+        ArrayList<int[]> ans = threeSum(arr, tar, 0, n - 1);
+        for (int[] a : ans) {
+            System.out.println(a[0] + ", " + a[1] + ", " + a[2]);
+        }
+    }
+
+    // count sort
+    public static void countSort_01(int[] arr) {
+        int maxNum = -(int) 1e9;
+        for (int ele : arr)
+            maxNum = Math.max(maxNum, ele);
+
+        int range = maxNum - 0 + 1;
+        int[] freq = new int[range];
+        for (int ele : arr)
+            freq[ele]++;
+
+        int idx = 0;
+        for (int i = 0; i < range; i++) {
+            while (freq[i]-- > 0) {
+                arr[idx++] = i;
+            }
+        }
+    }
+
+    public static void countSort_02(int[] arr) {
+        int maxNum = -(int) 1e9;
+        int minNum = (int) 1e9;
+
+        for (int ele : arr) {
+            maxNum = Math.max(maxNum, ele);
+            minNum = Math.min(minNum, ele);
+        }
+
+        int range = maxNum - minNum + 1;
+        int[] freq = new int[range];
+        for (int ele : arr)
+            freq[ele - minNum]++;
+
+        int idx = 0;
+        for (int i = minNum; i <= maxNum; i++) {
+            while (freq[i - minNum]-- > 0) {
+                arr[idx++] = i;
+            }
         }
     }
 
