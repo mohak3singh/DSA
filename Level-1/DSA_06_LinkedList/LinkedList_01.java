@@ -271,4 +271,245 @@ public class LinkedList_01 {
 
         return prev;
     }
+
+    // public static Node addTwoNumbers(Node l1, Node l2) {
+
+    //     l1 = reverseList(l1);
+    //     l2 = reverseList(l2);
+
+    //     Node dummy = new Node(-1);
+
+    //     Node c1 = l1, c2 = l2, prev = dummy;
+    //     int carry = 0;
+    //     while (c1 != null || c2 != null || carry != 0) {
+    //         int sum = carry + (c1 != null ? c1.data : 0) + (c2 != null ? c2.data : 0);
+
+    //         carry = sum / 10;
+    //         sum %= 10;
+
+    //         prev.next = new Node(sum);
+
+    //         prev = prev.next;
+    //         if (c1 != null)
+    //             c1 = c1.next;
+    //         if (c2 != null)
+    //             c2 = c2.next;
+    //     }
+
+    //     Node head = dummy.next;
+    //     head = reverseList(head);
+
+    //     l1 = reverseList(l1);
+    //     l2 = reverseList(l2);
+
+    //     return head;
+    // }
+
+    public Node midNode(Node node) {
+        if (node == null || node.next == null)
+            return node;
+        Node slow = node, fast = node;
+
+        while (fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        return slow;
+    }
+
+    public Node reverse(Node node) {
+        if (node == null || node.next == null)
+            return node;
+
+        Node curr = node, prev = null;
+        while (curr != null) {
+            Node forw = curr.next;
+
+            curr.next = prev;
+
+            prev = curr;
+            curr = forw;
+        }
+
+        return prev;
+    }
+
+
+    public void fold() {
+        Node mid = midNode(head);
+        Node nhead = mid.next;
+        mid.next = null;
+
+        nhead = reverse(nhead);
+
+        Node c1 = head, c2 = nhead;
+        while (c2 != null) {
+            Node f1 = c1.next, f2 = c2.next;
+
+            c1.next = c2;
+            c2.next = f1;
+
+            c1 = f1;
+            c2 = f2;
+        }
+
+        if (size() % 2 != 0)
+            tail = mid;
+        else
+            tail = mid.next;
+    }
+
+
+    public Node mergeTwoLists(Node l1, Node l2) {
+        if (l1 == null || l2 == null)
+            return l1 != null ? l1 : l2;
+
+        Node dummy = new Node(-1);
+        Node prev = dummy, c1 = l1, c2 = l2;
+
+        while (c1 != null && c2 != null) {
+            if (c1.data <= c2.data) {
+                prev.next = c1;
+                c1 = c1.next;
+            } else {
+                prev.next = c2;
+                c2 = c2.next;
+            }
+            prev = prev.next;
+        }
+
+        prev.next = c1 != null ? c1 : c2;
+
+        return dummy.next;
+    }
+
+     // 21
+    //  public ListNode mergeTwoLists2(ListNode l1, ListNode l2) {
+    //     if (l1 == null || l2 == null)
+    //         return l1 != null ? l1 : l2;
+
+    //     ListNode head = null, prev = null, c1 = l1, c2 = l2;
+    //     while (c1 != null && c2 != null) {
+    //         if (c1.val <= c2.val) {
+    //             if (prev != null) {
+    //                 prev.next = c1;
+    //                 prev = prev.next;
+    //             } else {
+    //                 head = c1;
+    //                 prev = head;
+    //             }
+    //             c1 = c1.next;
+    //         } else {
+    //             if (prev != null) {
+    //                 prev.next = c2;
+    //                 prev = prev.next;
+    //             } else {
+    //                 head = c2;
+    //                 prev = head;
+    //             }
+    //             c2 = c2.next;
+    //         }
+    //     }
+
+    //     prev.next = c1 != null ? c1 : c2;
+
+    //     return head;
+    // }
+
+     // 148
+    //  public ListNode sortList(ListNode head) {
+    //     if (head.next == null)
+    //         return head;
+
+    //     ListNode mid = middleNode(head);
+    //     ListNode nHead = mid.next;
+    //     mid.next = null;
+
+    //     ListNode leftSortedList = sortList(head);
+    //     ListNode rightSortedList = sortList(nHead);
+
+    //     return mergeTwoLists(leftSortedList, rightSortedList);
+    // }
+
+
+    private int lengthOfLL(Node node) {
+        if (node == null)
+            return 0;
+
+        Node curr = node;
+        int len = 0;
+        while (curr != null) {
+            curr = curr.next;
+            len++;
+        }
+
+        return len;
+    }
+
+    private int findIntersection(Node one, Node two) {
+        int a = lengthOfLL(one);
+        int b = lengthOfLL(two);
+
+        Node biggerListHead = a > b ? one : two;
+        Node smallerListHead = b < a ? two : one;
+        int diff = Math.abs(a - b);
+
+        while (diff-- > 0)
+            biggerListHead = biggerListHead.next;
+
+        while (biggerListHead != smallerListHead) {
+            biggerListHead = biggerListHead.next;
+            smallerListHead = smallerListHead.next;
+        }
+
+        return smallerListHead != null ? smallerListHead.data : -1;
+    }
+
+    // public int findIntersection(linkedlist one, linkedlist two) {
+    //     return findIntersection(one.head, two.head);
+    // }
+
+    public boolean IsPalindrome() {
+        Node mid = midNode(head);
+        Node nHead = mid.next;
+        mid.next = null;
+
+        nHead = reverse(nHead);
+        Node c1 = head, c2 = nHead;
+        boolean isPalindrome = true;
+        while (c2 != null) {
+            if (c1.data != c2.data) {
+                isPalindrome = false;
+                break;
+            }
+            c1 = c1.next;
+            c2 = c2.next;
+        }
+
+        nHead = reverse(nHead);
+        mid.next = nHead;
+
+        return isPalindrome;
+    }
+
+    Node ptr;
+    public boolean IsPalindrome(Node node) {
+        if (node == null) {
+            return true;
+        }
+
+        if (!IsPalindrome(node.next))
+            return false;
+        if (node.data != ptr.data)
+            return false;
+
+        ptr = ptr.next;
+        return true;
+    }
+
+    public boolean IsPalindrome2() {
+        ptr = head;
+        return IsPalindrome(head);
+    }
 }
