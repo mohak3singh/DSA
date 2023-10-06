@@ -76,6 +76,21 @@ public class Basic_2d_array_string {
         }
     }
 
+    public static void FulldiagonalPrint(int[][] arr) {
+        int n = arr.length, m = arr[0].length;
+        for (int gap = n - 1; gap >= 1; gap--) {
+            for (int i = gap, j = 0; i < n && j < m; i++, j++) {
+                System.out.println(arr[i][j]);
+            }
+        }
+
+        for (int gap = 0; gap < m; gap++) {
+            for (int i = 0, j = gap; i < n && j < m; i++, j++) {
+                System.out.println(arr[i][j]);
+            }
+        }
+    }
+
     public static void spiralPrint(int[][] arr) {
         int n = arr.length, m = arr[0].length;
         int rmin = 0, rmax = n - 1;
@@ -376,5 +391,7 @@ public class Basic_2d_array_string {
         // spiralPrint(arr);
         // exitPoint(arr1);
         saddlePoint(arr);
+
+        // removeDuplicates("aaabbcccddddaaaa");
     }
 }

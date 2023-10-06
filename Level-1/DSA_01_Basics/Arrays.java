@@ -156,6 +156,7 @@ public class Arrays {
             System.out.print(arr[si] + " ");
             si++;
         }
+        System.out.println();
     }
 
     public static void printAllSubArrays(int[] arr) {

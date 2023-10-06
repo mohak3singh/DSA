@@ -126,7 +126,7 @@ public class Conversions {
 
     public static void main(String[] args) {
         Scanner scn = new Scanner(System.in);
-        int n = scn.nextInt();
+        // int n = scn.nextInt();
         // int m = scn.nextInt();
         // int b = scn.nextInt();
 
@@ -135,10 +135,10 @@ public class Conversions {
 
         // System.out.println(anyBaseMultiplication(n, m, b));
 
-        int b1 = scn.nextInt();
-        int b2 = scn.nextInt();
-        int decimalNumber = anyBaseToDecimal(n,b1);
-        System.out.println(decimalToAnyBase(decimalNumber, b2));
+        // int b1 = scn.nextInt();
+        // int b2 = scn.nextInt();
+        // int decimalNumber = anyBaseToDecimal(n,b1);
+        // System.out.println(decimalToAnyBase(decimalNumber, b2));
 
         scn.close();
     }
