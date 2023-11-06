@@ -83,7 +83,7 @@ public class BinaryTree {
 
         int maxEle = node.data;
         maxEle = Math.max(maxEle, max2(node.left));
-        maxEle = Math.max(maxEle, max2(node.left));
+        maxEle = Math.max(maxEle, max2(node.right));
 
         return maxEle;
 
@@ -143,5 +143,117 @@ public class BinaryTree {
         return sum;
     }
 
+
+    public static boolean findData(Node node, int data) {
+        if (node == null)
+            return false;
+
+        if (node.data == data)
+            return true;
+
+        return findData(node.left, data) || findData(node.right, data);
+    }
+
+    public static boolean nodeToRootPath(Node node, int data, ArrayList<Node> ans) {
+        if (node == null)
+            return false;
+
+        if (node.data == data) {
+            ans.add(node);
+            return true;
+        }
+        boolean res = nodeToRootPath(node.left, data, ans) || nodeToRootPath(node.right, data, ans);
+        if (res)
+            ans.add(node);
+
+        return res;
+    }
+
+    public static ArrayList<Node> nodeToRootPath(Node root, int data) {
+        ArrayList<Node> ans = new ArrayList<>();
+        nodeToRootPath(root, data, ans);
+        return ans;
+    }
+
+    public static ArrayList<Node> nodeToRootPath02_(Node node, int data) {
+        if (node == null)
+            return null;
+
+        if (node.data == data) {
+            ArrayList<Node> list = new ArrayList<>();
+            list.add(node);
+            return list;
+        }
+
+        ArrayList<Node> left = nodeToRootPath02_(node.left, data);
+        if (left != null) {
+            left.add(node);
+            return left;
+        }
+
+        ArrayList<Node> right = nodeToRootPath02_(node.right, data);
+        if (right != null) {
+            right.add(node);
+            return right;
+        }
+
+        return null;
+    }
+
+    public static ArrayList<Node> nodeToRootPath02(Node node, int data) {
+        ArrayList<Node> ans = nodeToRootPath02_(node, data);
+        return ans != null ? ans : new ArrayList<>();
+    }
+
+    public static void KLevelsDown(Node node, int k, Node block, ArrayList<Integer> ans) {
+        if (node == null || k < 0 || node == block)
+            return;
+
+        if (k == 0) {
+            ans.add(node.data);
+            return;
+        }
+
+        KLevelsDown(node.left, k - 1, block, ans);
+        KLevelsDown(node.right, k - 1, block, ans);
+    }
+
+    public static ArrayList<Integer> kaway(Node node, int data, int k) {
+        ArrayList<Node> list = new ArrayList<>();
+        nodeToRootPath(node, data, list);
+
+        ArrayList<Integer> ans = new ArrayList<>();
+        Node block = null;
+        for (int i = 0; i < list.size(); i++) {
+            KLevelsDown(list.get(i), k - i, block, ans);
+            block = list.get(i);
+        }
+
+        return ans;
+    }
+
+    public static int kaway2(Node node, int data, int k, ArrayList<Integer> ans) {
+        if (node == null)
+            return -1;
+
+        if (node.data == data) {
+            KLevelsDown(node, k, null, ans);
+            return 1;
+        }
+
+        int ld = kaway2(node.left, data, k, ans);
+        if (ld != -1) {
+            KLevelsDown(node, k - ld, node.left, ans);
+            return ld + 1;
+        }
+
+        int rd = kaway2(node.right, data, k, ans);
+        if (rd != -1) {
+            KLevelsDown(node, k - rd, node.right, ans);
+            return rd + 1;
+        }
+
+        return -1;
+    }
     
 }

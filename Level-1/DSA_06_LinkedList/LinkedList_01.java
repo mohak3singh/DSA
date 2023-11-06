@@ -433,38 +433,38 @@ public class LinkedList_01 {
     // }
 
 
-    private int lengthOfLL(Node node) {
-        if (node == null)
-            return 0;
+    // private int lengthOfLL(Node node) {
+    //     if (node == null)
+    //         return 0;
 
-        Node curr = node;
-        int len = 0;
-        while (curr != null) {
-            curr = curr.next;
-            len++;
-        }
+    //     Node curr = node;
+    //     int len = 0;
+    //     while (curr != null) {
+    //         curr = curr.next;
+    //         len++;
+    //     }
 
-        return len;
-    }
+    //     return len;
+    // }
 
-    private int findIntersection(Node one, Node two) {
-        int a = lengthOfLL(one);
-        int b = lengthOfLL(two);
+    // private int findIntersection(Node one, Node two) {
+    //     int a = lengthOfLL(one);
+    //     int b = lengthOfLL(two);
 
-        Node biggerListHead = a > b ? one : two;
-        Node smallerListHead = b < a ? two : one;
-        int diff = Math.abs(a - b);
+    //     Node biggerListHead = a > b ? one : two;
+    //     Node smallerListHead = b < a ? two : one;
+    //     int diff = Math.abs(a - b);
 
-        while (diff-- > 0)
-            biggerListHead = biggerListHead.next;
+    //     while (diff-- > 0)
+    //         biggerListHead = biggerListHead.next;
 
-        while (biggerListHead != smallerListHead) {
-            biggerListHead = biggerListHead.next;
-            smallerListHead = smallerListHead.next;
-        }
+    //     while (biggerListHead != smallerListHead) {
+    //         biggerListHead = biggerListHead.next;
+    //         smallerListHead = smallerListHead.next;
+    //     }
 
-        return smallerListHead != null ? smallerListHead.data : -1;
-    }
+    //     return smallerListHead != null ? smallerListHead.data : -1;
+    // }
 
     // public int findIntersection(linkedlist one, linkedlist two) {
     //     return findIntersection(one.head, two.head);

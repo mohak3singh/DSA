@@ -9,8 +9,8 @@ public class Basic_ques {
         return true;
     }
 
-    public static void printAllPrimeInRange(int low, int heigh) {
-        for (int i = low; i <= heigh; i++) {
+    public static void printAllPrimeInRange(int low, int height) {
+        for (int i = low; i <= height; i++) {
             if (isNumberPrime(i))
                 System.out.println(i);
         }

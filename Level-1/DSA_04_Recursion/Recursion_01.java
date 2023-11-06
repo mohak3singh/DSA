@@ -3,6 +3,10 @@ import java.util.Scanner;
 
 class Recursion_01{
 
+    // 1. Faith
+    // 2. Recursive tree diagram
+    // 3. Code 
+
     public static int factorial(int n){
         return n == 0 ? 1 : factorial(n - 1) * n;
     }

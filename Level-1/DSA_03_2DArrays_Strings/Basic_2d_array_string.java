@@ -37,6 +37,44 @@ public class Basic_2d_array_string {
         return res;
     }
 
+    public static int firstIdx(int[] arr, int data) {
+        int si = 0, ei = arr.length - 1;
+        while(si <= ei){
+            int mid = (si + ei)/2;
+            if(arr[mid] == data){
+                if(mid - 1 >= 0 && arr[mid - 1] == data){
+                    ei = mid - 1;
+                }else{
+                    return mid;
+                }
+            }else if(data < arr[mid]){
+                ei = mid - 1; 
+            }else{
+                si =  mid + 1;
+            }
+        }
+        return -1;
+    }
+
+    public static int lastIdx(int[] arr, int data) {
+        int si = 0, ei = arr.length - 1;
+        while(si <= ei){
+            int mid = (si + ei)/2;
+            if(arr[mid] == data){
+                if(mid + 1 < arr.length && arr[mid + 1] == data){
+                    si = mid + 1;
+                }else{
+                    return mid;
+                }
+            }else if(data < arr[mid]){
+                ei = mid - 1; 
+            }else{
+                si =  mid + 1;
+            }
+        }
+        return -1;
+    }
+
     public static void waveprint(int[][] arr){
         int n = arr.length, m = arr[0].length;
         for (int i = 0; i < n; i++) {
@@ -67,6 +105,7 @@ public class Basic_2d_array_string {
         }
     }
 
+    // Gap strategy IMP
     public static void diagonalPrint(int[][] arr){
         int n = arr.length, m = arr[0].length;
         for (int gap = 0; gap < m; gap++) {

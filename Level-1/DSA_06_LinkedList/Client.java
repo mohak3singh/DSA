@@ -5,5 +5,6 @@ public class Client {
         LinkedList_01 ll = new LinkedList_01();
         ll.addFirst(10);
         System.out.println(ll.removeLast());
+
     }
 }
