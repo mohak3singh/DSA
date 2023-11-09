@@ -305,7 +305,6 @@ public class TimeAndSpace {
     //threeSum
     // public static int segregate(int[] arr, int pivot, int si, int ei) {
     //     swap(arr, pivot, ei);
-
     //     int p = si - 1, itr = si;
     //     while (itr <= ei) {
     //         if (arr[itr] <= arr[ei])
@@ -364,7 +363,7 @@ public class TimeAndSpace {
     }
 
     // count sort
-    public static void countSort_01(int[] arr) {
+public static void countSort_01(int[] arr) {
         int maxNum = -(int) 1e9;
         for (int ele : arr)
             maxNum = Math.max(maxNum, ele);

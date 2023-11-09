@@ -42,12 +42,19 @@ public class Arrays {
         System.out.println(maxEle - minEle);
     }
 
+    public static int[] swap(int[] arr, int temp, int i, int j){
+        temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+
+        return arr;
+    }
+
     public static int[] reverseOfArray(int[] arr,int i, int j){
 
         while(i < j){
-            int temp = arr[i];
-            arr[i] = arr[j];
-            arr[j] = temp;
+            int temp = 0;
+            swap(arr, temp, i, j);
             i++;
             j--;
         }
